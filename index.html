@@ -284,6 +284,42 @@
       font-size: 0.78rem;
       font-weight: 700;
     }
+    .event-search {
+      position: relative;
+      max-width: 520px;
+      margin: -12px 0 24px;
+    }
+    .event-search svg {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      width: 20px;
+      height: 20px;
+      color: var(--muted);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .event-search input { height: 54px; padding-left: 46px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .event-empty {
+      margin: 0;
+      border: 1px dashed #CBC4F7;
+      border-radius: 16px;
+      background: var(--white);
+      color: var(--muted);
+      padding: 24px;
+      text-align: center;
+    }
     .events-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -301,6 +337,7 @@
       box-shadow: 0 8px 24px rgba(23, 37, 84, 0.06);
       transition: transform 200ms ease, box-shadow 200ms ease;
     }
+    .event-card[hidden] { display: none; }
     .event-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
     .event-banner {
       height: 118px;
@@ -669,6 +706,12 @@
           </div>
           <p class="sample-note">Sample events · Not officially confirmed</p>
         </div>
+        <div class="event-search">
+          <label class="sr-only" for="event-search">Search events by name, category, or description</label>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="event-search" type="search" autocomplete="off" placeholder="Search by event name, category, or description">
+        </div>
+        <p class="event-empty" id="event-empty" role="status" aria-live="polite" hidden>No events match your search. Try another name, category, or keyword.</p>
         <div class="events-grid">
           <article class="event-card" data-category="Workshops">
             <div class="event-banner" aria-hidden="true">
@@ -921,6 +964,31 @@
   <script>
     const menuButton = document.querySelector(".menu-button");
     const navLinks = document.querySelector(".nav-links");
+    const eventSearch = document.querySelector("#event-search");
+    const eventCards = [...document.querySelectorAll(".event-card")];
+    const emptyEventsMessage = document.querySelector("#event-empty");
+    let activeCategory = null;
+
+    function filterEvents() {
+      const query = eventSearch.value.trim().toLocaleLowerCase();
+      let visibleCount = 0;
+
+      eventCards.forEach((card) => {
+        const matchesCategory = !activeCategory || card.dataset.category === activeCategory;
+        const searchableText = [
+          card.querySelector("h3").textContent,
+          card.dataset.category,
+          card.querySelector(".event-description").textContent
+        ].join(" ").toLocaleLowerCase();
+        const matchesQuery = !query || searchableText.includes(query);
+        card.hidden = !matchesCategory || !matchesQuery;
+        if (!card.hidden) visibleCount += 1;
+      });
+
+      emptyEventsMessage.hidden = visibleCount > 0;
+    }
+
+    eventSearch.addEventListener("input", filterEvents);
 
     menuButton.addEventListener("click", () => {
       const isOpen = navLinks.classList.toggle("open");
@@ -933,9 +1001,8 @@
         navLinks.classList.remove("open");
         menuButton.setAttribute("aria-expanded", "false");
         if (event.target.closest('a').getAttribute("href") === "#events") {
-          document.querySelectorAll(".event-card").forEach((card) => {
-            card.hidden = false;
-          });
+          activeCategory = null;
+          filterEvents();
         }
       }
     });
@@ -950,10 +1017,8 @@
 
     document.querySelectorAll("[data-category-filter]").forEach((link) => {
       link.addEventListener("click", () => {
-        const category = link.dataset.categoryFilter;
-        document.querySelectorAll(".event-card").forEach((card) => {
-          card.hidden = card.dataset.category !== category;
-        });
+        activeCategory = link.dataset.categoryFilter;
+        filterEvents();
       });
     });
 
