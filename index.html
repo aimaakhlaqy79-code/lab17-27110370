@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusLoop helps students discover and participate in campus events.">
+  <title>CampusLoop - Your Campus. Your Community. Your Events.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #172554;
+      --purple: #6D5CE8;
+      --lavender: #F3F0FF;
+      --white: #FFFFFF;
+      --grey: #333333;
+      --muted: #667085;
+      --border: #E8E7F1;
+      --shadow: 0 16px 40px rgba(23, 37, 84, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      color: var(--grey);
+      background: var(--white);
+      line-height: 1.6;
+    }
+    h1, h2, h3, .logo, .btn {
+      font-family: "Poppins", sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    img, svg { display: block; }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+    .section { padding: 92px 0; }
+    .section-heading {
+      max-width: 680px;
+      margin-bottom: 38px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--purple);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--purple);
+    }
+    h1, h2, h3 { color: var(--navy); line-height: 1.15; margin-top: 0; }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 14px; }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(232, 231, 241, 0.8);
+    }
+    .nav-inner {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--purple);
+      color: var(--white);
+      box-shadow: 0 8px 18px rgba(109, 92, 232, 0.28);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .nav-links a:not(.btn) { transition: color 180ms ease; }
+    .nav-links a:not(.btn):hover { color: var(--purple); }
+    .menu-button { display: none; border: 0; background: none; color: var(--navy); cursor: pointer; }
+
+    .btn {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--purple);
+      color: var(--white);
+      box-shadow: 0 10px 24px rgba(109, 92, 232, 0.24);
+    }
+    .btn-primary:hover { background: #5B4ACF; box-shadow: 0 14px 28px rgba(109, 92, 232, 0.30); }
+    .btn-secondary {
+      background: var(--white);
+      color: var(--navy);
+      border-color: var(--border);
+    }
+    .nav-links .btn { min-height: 44px; color: var(--white); }
+
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(109, 92, 232, 0.14), transparent 23%),
+        linear-gradient(135deg, #FFFFFF 0%, #FAF9FF 100%);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 68px;
+    }
+    .hero h1 {
+      max-width: 700px;
+      margin-bottom: 22px;
+      font-size: clamp(3rem, 6vw, 5.1rem);
+      letter-spacing: -0.045em;
+    }
+    .hero h1 span {
+      color: var(--purple);
+      position: relative;
+    }
+    .hero-copy {
+      max-width: 590px;
+      margin: 0 0 30px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-art {
+      position: relative;
+      min-height: 470px;
+    }
+    .art-backdrop {
+      position: absolute;
+      inset: 30px 10px 20px 44px;
+      border-radius: 36px;
+      background: var(--lavender);
+      transform: rotate(3deg);
+    }
+    .art-window {
+      position: absolute;
+      inset: 54px 32px 42px 20px;
+      overflow: hidden;
+      border: 10px solid var(--white);
+      border-radius: 28px;
+      background: linear-gradient(145deg, #DCD7FF, #EEEAFE);
+      box-shadow: var(--shadow);
+      transform: rotate(-2deg);
+    }
+    .scene-sky {
+      position: absolute;
+      inset: 0 0 48%;
+      background: linear-gradient(180deg, #FDFCFF, #E8E4FF);
+    }
+    .sun {
+      position: absolute;
+      top: 38px;
+      right: 48px;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: #FFD978;
+      box-shadow: 0 0 0 12px rgba(255, 217, 120, 0.20);
+    }
+    .building {
+      position: absolute;
+      bottom: 0;
+      width: 170px;
+      height: 210px;
+      border-radius: 16px 16px 0 0;
+      background: var(--navy);
+    }
+    .building-one { left: 28px; }
+    .building-two { right: 18px; height: 170px; background: #283B7B; }
+    .building::before {
+      content: "";
+      position: absolute;
+      inset: 32px 24px 28px;
+      background: repeating-linear-gradient(90deg, #BEB5FF 0 24px, transparent 24px 43px),
+                  repeating-linear-gradient(0deg, transparent 0 42px, #BEB5FF 42px 58px);
+      opacity: 0.75;
+    }
+    .floating-card {
+      position: absolute;
+      z-index: 3;
+      min-width: 190px;
+      padding: 14px;
+      border: 1px solid rgba(232, 231, 241, 0.8);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 14px 34px rgba(23, 37, 84, 0.15);
+    }
+    .floating-card.top { top: 18px; left: 0; }
+    .floating-card.bottom { right: -10px; bottom: 18px; }
+    .float-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .float-value { display: block; margin-top: 3px; color: var(--navy); font-family: "Poppins"; font-weight: 700; }
+
+    .categories-strip {
+      border-block: 1px solid var(--border);
+      background: var(--white);
+    }
+    .category-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .category-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 86px;
+      border-right: 1px solid var(--border);
+      color: var(--navy);
+      font-weight: 700;
+      transition: background 180ms ease, color 180ms ease;
+    }
+    .category-link:last-child { border-right: 0; }
+    .category-link:hover { background: var(--lavender); color: var(--purple); }
+
+    .events-section { background: #FCFBFF; }
+    .events-top {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .sample-note {
+      margin: 0 0 38px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--lavender);
+      color: var(--navy);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .event-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 385px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      box-shadow: 0 8px 24px rgba(23, 37, 84, 0.06);
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .event-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .event-banner {
+      height: 118px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #DDD7FF, #F5F3FF);
+      color: var(--purple);
+    }
+    .event-banner.competition { background: linear-gradient(135deg, #DCE7FF, #F1F5FF); color: #4F67C8; }
+    .event-banner.social { background: linear-gradient(135deg, #FFE1EC, #FFF3F7); color: #C85D87; }
+    .event-banner.networking { background: linear-gradient(135deg, #D8F1EC, #EFFAF7); color: #3C9984; }
+    .event-content { flex: 1; display: flex; flex-direction: column; padding: 20px; }
+    .event-category {
+      align-self: flex-start;
+      margin-bottom: 10px;
+      color: var(--purple);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .event-card h3 { font-size: 1.05rem; margin-bottom: 12px; }
+    .event-meta {
+      display: grid;
+      gap: 5px;
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .event-meta strong { color: var(--navy); font-weight: 600; }
+    .event-description { margin: 0 0 18px; color: var(--muted); font-size: 0.86rem; }
+    .event-card .text-link {
+      margin-top: auto;
+      color: var(--purple);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: center;
+      gap: 72px;
+    }
+    .about-visual {
+      position: relative;
+      min-height: 410px;
+      border-radius: 28px;
+      background: var(--lavender);
+      overflow: hidden;
+    }
+    .about-circle {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      right: -40px;
+      bottom: -50px;
+      border-radius: 50%;
+      background: var(--purple);
+      opacity: 0.95;
+    }
+    .phone {
+      position: absolute;
+      width: 210px;
+      height: 330px;
+      left: 50%;
+      top: 42px;
+      transform: translateX(-50%) rotate(-5deg);
+      border: 8px solid var(--navy);
+      border-radius: 30px;
+      background: var(--white);
+      box-shadow: 0 20px 40px rgba(23, 37, 84, 0.18);
+      padding: 28px 16px 16px;
+    }
+    .phone-notch {
+      position: absolute;
+      width: 70px;
+      height: 16px;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 0 0 10px 10px;
+      background: var(--navy);
+    }
+    .phone-card {
+      height: 82px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      background: var(--lavender);
+      padding: 12px;
+    }
+    .phone-card i {
+      display: block;
+      width: 58%;
+      height: 8px;
+      margin-bottom: 8px;
+      border-radius: 99px;
+      background: var(--purple);
+    }
+    .phone-card i:last-child { width: 82%; background: #CBC4F7; }
+    .about-copy p { color: var(--muted); }
+    .feature-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .feature-icon {
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--lavender);
+      color: var(--purple);
+    }
+    .feature-item strong { display: block; color: var(--navy); }
+    .feature-item span { color: var(--muted); font-size: 0.88rem; }
+
+    .registration {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .registration-grid {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      align-items: center;
+      gap: 72px;
+    }
+    .registration h2 { color: var(--white); }
+    .registration-copy p { color: #C9D1E8; }
+    .registration-copy .eyebrow { color: #BDB5FF; }
+    .registration-copy .eyebrow::before { background: #BDB5FF; }
+    .form-card {
+      border-radius: 20px;
+      background: var(--white);
+      padding: 30px;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.18);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: grid; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    label { color: var(--navy); font-size: 0.82rem; font-weight: 700; }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--grey);
+      outline: none;
+      transition: border 180ms ease, box-shadow 180ms ease;
+    }
+    input, select { height: 48px; padding: 0 14px; }
+    textarea { min-height: 112px; resize: vertical; padding: 12px 14px; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(109, 92, 232, 0.12);
+    }
+    .form-card .btn { width: 100%; margin-top: 16px; }
+    .confirmation {
+      display: none;
+      margin-top: 14px;
+      border-radius: 10px;
+      background: #EAF8F2;
+      color: #247557;
+      padding: 12px 14px;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .confirmation.show { display: block; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 72px;
+    }
+    .contact-details { display: grid; gap: 18px; margin-top: 26px; }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+    }
+    .contact-detail .feature-icon { background: var(--lavender); }
+    .contact-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(23, 37, 84, 0.06);
+    }
+
+    footer {
+      background: #101C44;
+      color: #DDE3F3;
+      padding: 48px 0 24px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 36px;
+    }
+    footer .logo { color: var(--white); }
+    footer p { color: #AEB8D1; font-size: 0.88rem; }
+    .footer-title { color: var(--white); font-family: "Poppins"; font-size: 0.9rem; }
+    .footer-links { display: grid; gap: 8px; margin-top: 12px; font-size: 0.88rem; }
+    .footer-links a:hover { color: #BDB5FF; }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 20px;
+      color: #929DB9;
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid, .about-grid, .registration-grid, .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero { padding: 70px 0 30px; }
+      .hero-grid { gap: 18px; }
+      .hero-art { max-width: 620px; width: 100%; margin-inline: auto; }
+      .events-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { gap: 38px; }
+      .about-visual { max-width: 620px; width: 100%; }
+      .registration-grid, .contact-grid { gap: 38px; }
+    }
+
+    @media (max-width: 760px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .section { padding: 68px 0; }
+      .nav-inner { height: 70px; }
+      .menu-button { display: block; }
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 14px;
+        right: 14px;
+        display: none;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 4px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--white);
+        padding: 12px;
+        box-shadow: var(--shadow);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a:not(.btn) { padding: 10px 12px; }
+      .nav-links .btn { margin-top: 4px; }
+      .hero h1 { font-size: clamp(2.55rem, 13vw, 4rem); }
+      .hero-art { min-height: 390px; }
+      .floating-card.top { left: 6px; }
+      .floating-card.bottom { right: 0; }
+      .category-row { grid-template-columns: repeat(2, 1fr); }
+      .category-link { border-bottom: 1px solid var(--border); }
+      .category-link:nth-child(2) { border-right: 0; }
+      .events-top { align-items: flex-start; flex-direction: column; }
+      .sample-note { margin: -24px 0 28px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid > div:first-child { grid-column: 1 / -1; }
+      .footer-bottom { gap: 12px; flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      .hero-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .hero-actions .btn { width: 100%; padding-inline: 10px; }
+      .hero-art { min-height: 330px; }
+      .art-window { inset: 48px 10px 34px 10px; }
+      .building { width: 130px; }
+      .floating-card { min-width: 150px; }
+      .floating-card.bottom { bottom: 4px; }
+      .events-grid { grid-template-columns: 1fr; }
+      .event-card { min-height: 350px; }
+      .category-row { grid-template-columns: 1fr; }
+      .category-link { border-right: 0; }
+      .form-grid, .contact-form { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .form-card, .contact-form { padding: 20px; }
+      .about-visual { min-height: 360px; }
+      .phone { height: 290px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" aria-label="Primary navigation">
+    <div class="container nav-inner">
+      <a class="logo" href="#home" aria-label="CampusLoop home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="M4 10.5L12 6l8 4.5-8 4.5-8-4.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7 12v4.5c2.8 2.3 7.2 2.3 10 0V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        CampusLoop
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#home">Home</a>
+        <a href="#events">Explore Events</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-primary" href="#register">Register Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Campus life, connected</div>
+          <h1>Your Campus.<br>Your Community.<br><span>Your Events.</span></h1>
+          <p class="hero-copy">Discover activities happening around your university, connect with people who share your interests, and make campus life easier to navigate.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#events">Explore Events <span aria-hidden="true">→</span></a>
+            <a class="btn btn-secondary" href="#contact">Host an Event</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Illustration of a university campus event">
+          <div class="art-backdrop"></div>
+          <div class="floating-card top">
+            <span class="float-label">Discover</span>
+            <span class="float-value">Events near you</span>
+          </div>
+          <div class="art-window">
+            <div class="scene-sky"></div>
+            <div class="sun"></div>
+            <div class="building building-one"></div>
+            <div class="building building-two"></div>
+          </div>
+          <div class="floating-card bottom">
+            <span class="float-label">Get involved</span>
+            <span class="float-value">Find your community</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="categories-strip" aria-label="Event categories">
+      <div class="container category-row">
+        <a class="category-link" href="#events" data-category-filter="Workshops"><span aria-hidden="true">◆</span> Workshops</a>
+        <a class="category-link" href="#events" data-category-filter="Competitions"><span aria-hidden="true">◈</span> Competitions</a>
+        <a class="category-link" href="#events" data-category-filter="Social Events"><span aria-hidden="true">●</span> Social Events</a>
+        <a class="category-link" href="#events" data-category-filter="Networking"><span aria-hidden="true">✦</span> Networking</a>
+      </div>
+    </div>
+
+    <section class="section events-section" id="events">
+      <div class="container">
+        <div class="events-top">
+          <div class="section-heading">
+            <div class="eyebrow">What's happening</div>
+            <h2>Upcoming events</h2>
+            <p>Explore a mix of learning, creativity and community events.</p>
+          </div>
+          <p class="sample-note">Sample events · Not officially confirmed</p>
+        </div>
+        <div class="events-grid">
+          <article class="event-card" data-category="Workshops">
+            <div class="event-banner" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><rect x="12" y="14" width="40" height="36" rx="8" stroke="currentColor" stroke-width="3"/><path d="M22 24h20M22 32h12M22 40h16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="47" cy="43" r="8" fill="currentColor"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Workshops</span>
+              <h3>Creative Coding Fundamentals</h3>
+              <p class="event-meta"><span><strong>25 November 2026</strong> · 5:00 PM</span><span>Innovation Lab</span></p>
+              <p class="event-description">Build a practical foundation in creative coding through hands-on activities.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+
+          <article class="event-card" data-category="Workshops">
+            <div class="event-banner" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="20" stroke="currentColor" stroke-width="3"/><path d="M32 21v22M21 32h22" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Workshops</span>
+              <h3>Design Thinking Sprint</h3>
+              <p class="event-meta"><span><strong>28 November 2026</strong> · 3:30 PM</span><span>Student Commons</span></p>
+              <p class="event-description">Turn an everyday problem into a tested idea using collaborative design methods.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+
+          <article class="event-card" data-category="Competitions">
+            <div class="event-banner competition" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><path d="M20 14h24v8c0 11-5 18-12 18s-12-7-12-18v-8Z" stroke="currentColor" stroke-width="3"/><path d="M20 19H12v3c0 7 5 11 12 11M44 19h8v3c0 7-5 11-12 11M32 40v8M23 51h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Competitions</span>
+              <h3>Campus Innovation Challenge</h3>
+              <p class="event-meta"><span><strong>1 December 2026</strong> · 10:00 AM</span><span>Central Auditorium</span></p>
+              <p class="event-description">Pitch a student-led solution and receive feedback from a multidisciplinary panel.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+
+          <article class="event-card" data-category="Competitions">
+            <div class="event-banner competition" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><rect x="12" y="12" width="40" height="40" rx="8" stroke="currentColor" stroke-width="3"/><path d="m22 34 7 7 14-17" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Competitions</span>
+              <h3>Quiz League: Finals Night</h3>
+              <p class="event-meta"><span><strong>4 December 2026</strong> · 6:00 PM</span><span>Conference Hall</span></p>
+              <p class="event-description">Teams compete across general knowledge, culture and current affairs.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+
+          <article class="event-card" data-category="Social Events">
+            <div class="event-banner social" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><circle cx="24" cy="25" r="8" stroke="currentColor" stroke-width="3"/><circle cx="43" cy="27" r="6" stroke="currentColor" stroke-width="3"/><path d="M12 48c1-9 6-14 12-14s11 5 12 14M37 38c7-2 13 2 15 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Social Events</span>
+              <h3>Community Film Evening</h3>
+              <p class="event-meta"><span><strong>6 December 2026</strong> · 7:30 PM</span><span>Student Courtyard</span></p>
+              <p class="event-description">Bring a blanket and join a relaxed outdoor screening with your campus community.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+
+          <article class="event-card" data-category="Social Events">
+            <div class="event-banner social" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><path d="M16 48V28l16-10 16 10v20" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M24 48V36h16v12M22 25h20" stroke="currentColor" stroke-width="3"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Social Events</span>
+              <h3>Campus Culture Fair</h3>
+              <p class="event-meta"><span><strong>9 December 2026</strong> · 12:00 PM</span><span>Main Lawn</span></p>
+              <p class="event-description">Meet student communities and discover the traditions that shape campus life.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+
+          <article class="event-card" data-category="Networking">
+            <div class="event-banner networking" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="7" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="12" r="5" stroke="currentColor" stroke-width="3"/><circle cx="49" cy="46" r="5" stroke="currentColor" stroke-width="3"/><circle cx="15" cy="46" r="5" stroke="currentColor" stroke-width="3"/><path d="M32 25V17M38 37l8 6M26 37l-7 6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Networking</span>
+              <h3>Future Careers Mixer</h3>
+              <p class="event-meta"><span><strong>12 December 2026</strong> · 4:00 PM</span><span>Career Centre</span></p>
+              <p class="event-description">Connect with peers and explore paths across different professional sectors.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+
+          <article class="event-card" data-category="Networking">
+            <div class="event-banner networking" aria-hidden="true">
+              <svg width="62" height="62" viewBox="0 0 64 64" fill="none"><rect x="10" y="16" width="44" height="32" rx="8" stroke="currentColor" stroke-width="3"/><path d="M10 26h44M18 21h.1M24 21h.1" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="38" r="5" fill="currentColor"/></svg>
+            </div>
+            <div class="event-content">
+              <span class="event-category">Networking</span>
+              <h3>Student Founders Meetup</h3>
+              <p class="event-meta"><span><strong>15 December 2026</strong> · 5:30 PM</span><span>Innovation Hub</span></p>
+              <p class="event-description">Share ideas, exchange experiences and meet others building student projects.</p>
+              <a class="text-link" href="#register">Register interest →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div class="about-visual" aria-label="CampusLoop mobile event discovery illustration">
+          <div class="about-circle"></div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-card"><i></i><i></i></div>
+            <div class="phone-card"><i></i><i></i></div>
+            <div class="phone-card"><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="about-copy">
+          <div class="eyebrow">About CampusLoop</div>
+          <h2>Make every campus moment count.</h2>
+          <p>CampusLoop brings campus opportunities into one clear, approachable space. From a first workshop to a major student initiative, it helps students discover what interests them and take part with confidence.</p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="feature-icon" aria-hidden="true">✓</div>
+              <div><strong>Discover with ease</strong><span>Browse events by topic, date and community interest.</span></div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon" aria-hidden="true">✓</div>
+              <div><strong>Build meaningful connections</strong><span>Find people and activities that match your interests.</span></div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon" aria-hidden="true">✓</div>
+              <div><strong>Keep campus in the loop</strong><span>See the details you need before deciding to participate.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section registration" id="register">
+      <div class="container registration-grid">
+        <div class="registration-copy">
+          <div class="eyebrow">Join the community</div>
+          <h2>Ready to get involved?</h2>
+          <p>Register your interest in a sample campus event. This is a frontend demonstration, so no information is sent to a server.</p>
+        </div>
+        <form class="form-card" id="registration-form" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="full-name">Full name</label>
+              <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field full">
+              <label for="event-select">Event</label>
+              <select id="event-select" name="event" required>
+                <option value="">Select an event</option>
+                <option>Creative Coding Fundamentals</option>
+                <option>Design Thinking Sprint</option>
+                <option>Campus Innovation Challenge</option>
+                <option>Quiz League: Finals Night</option>
+                <option>Community Film Evening</option>
+                <option>Campus Culture Fair</option>
+                <option>Future Careers Mixer</option>
+                <option>Student Founders Meetup</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Complete Registration</button>
+          <div class="confirmation" id="registration-confirmation" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <div class="eyebrow">Get in touch</div>
+          <h2>Contact CampusLoop</h2>
+          <p>Have a question or want to host an event? Send us a message.</p>
+          <div class="contact-details">
+            <div class="contact-detail"><span class="feature-icon" aria-hidden="true">@</span><span>hello@campusloop.example</span></div>
+            <div class="contact-detail"><span class="feature-icon" aria-hidden="true">⌂</span><span>Campus Community Office</span></div>
+            <div class="contact-detail"><span class="feature-icon" aria-hidden="true">◷</span><span>Monday–Friday, 9:00 AM–5:00 PM</span></div>
+          </div>
+        </div>
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="field">
+            <label for="contact-name">Name</label>
+            <input id="contact-name" name="name" type="text" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us how we can help" required></textarea>
+          </div>
+          <div class="field full">
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <div class="confirmation" id="contact-confirmation" role="status" aria-live="polite"></div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="#home">
+            <span class="logo-mark" aria-hidden="true">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="M4 10.5L12 6l8 4.5-8 4.5-8-4.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7 12v4.5c2.8 2.3 7.2 2.3 10 0V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            CampusLoop
+          </a>
+          <p>Your Campus. Your Community. Your Events.</p>
+        </div>
+        <div>
+          <div class="footer-title">Explore</div>
+          <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#events">Events</a>
+            <a href="#about">About</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Get involved</div>
+          <div class="footer-links">
+            <a href="#register">Register</a>
+            <a href="#contact">Host an Event</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 CampusLoop</span>
+        <span>Sample university events platform</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector(".menu-button");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+    });
+
+    navLinks.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        if (event.target.closest('a').getAttribute("href") === "#events") {
+          document.querySelectorAll(".event-card").forEach((card) => {
+            card.hidden = false;
+          });
+        }
+      }
+    });
+
+    document.querySelectorAll(".text-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        const card = link.closest(".event-card");
+        const title = card.querySelector("h3").textContent;
+        document.querySelector("#event-select").value = title;
+      });
+    });
+
+    document.querySelectorAll("[data-category-filter]").forEach((link) => {
+      link.addEventListener("click", () => {
+        const category = link.dataset.categoryFilter;
+        document.querySelectorAll(".event-card").forEach((card) => {
+          card.hidden = card.dataset.category !== category;
+        });
+      });
+    });
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    const registrationForm = document.querySelector("#registration-form");
+    const registrationConfirmation = document.querySelector("#registration-confirmation");
+    registrationForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = registrationForm.elements.name.value.trim();
+      const email = registrationForm.elements.email.value.trim();
+      const eventName = registrationForm.elements.event.value;
+
+      if (!name || !email || !eventName) {
+        registrationConfirmation.textContent = "Please complete every required field.";
+        registrationConfirmation.className = "confirmation show";
+        return;
+      }
+      if (!isValidEmail(email)) {
+        registrationConfirmation.textContent = "Please enter a valid email address.";
+        registrationConfirmation.className = "confirmation show";
+        return;
+      }
+
+      registrationConfirmation.textContent = `Thanks, ${name}! Your interest in "${eventName}" has been recorded for this demo.`;
+      registrationConfirmation.className = "confirmation show";
+      registrationForm.reset();
+    });
+
+    const contactForm = document.querySelector("#contact-form");
+    const contactConfirmation = document.querySelector("#contact-confirmation");
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = contactForm.elements.name.value.trim();
+      const email = contactForm.elements.email.value.trim();
+      const message = contactForm.elements.message.value.trim();
+
+      if (!name || !email || !message) {
+        contactConfirmation.textContent = "Please complete every required field.";
+        contactConfirmation.className = "confirmation show";
+        return;
+      }
+      if (!isValidEmail(email)) {
+        contactConfirmation.textContent = "Please enter a valid email address.";
+        contactConfirmation.className = "confirmation show";
+        return;
+      }
+
+      contactConfirmation.textContent = `Thanks, ${name}! Your message has been received by this demo form.`;
+      contactConfirmation.className = "confirmation show";
+      contactForm.reset();
+    });
+  </script>
+</body>
+</html>
